@@ -12,13 +12,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
+import org.json.JSONObject;
 
-import okhttp3.Response;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -34,6 +45,7 @@ public class ActivityRegister extends AppCompatActivity {
     private Button buttonRegister;
     private CompositeSubscription compositeSubscription;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +58,12 @@ public class ActivityRegister extends AppCompatActivity {
         etRepeatPassword = findViewById(R.id.etRepeatPassword);
         textViewLogin = findViewById(R.id.textViewLogin);
         buttonRegister = findViewById(R.id.buttonRegister);
-        compositeSubscription = new CompositeSubscription();
 
         textViewLogin.setOnClickListener(view->showLoginForm());
         buttonRegister.setOnClickListener(view->register());
     }
+
+
 
     private void showLoginForm() {
         Intent intent = new Intent(getBaseContext(), ActivityLogin.class);
@@ -96,24 +109,58 @@ public class ActivityRegister extends AppCompatActivity {
         }*/
 
         if(nErrors == 0) {
+            RequestQueue queue = Volley.newRequestQueue(this);
             User user = new User(firstName, lastName, email, password);
-            registerProcess(user);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.178.68:3001/users/register",
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Toast.makeText(ActivityRegister.this, "Successfully registered", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getBaseContext(), ActivityLogin.class);
+                            startActivity(intent);
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.i("asd", error.toString());
+                }
+            }){
+                @Override
+                protected Map<String,String> getParams(){
+                    Map<String,String> params = new HashMap<String, String>();
+                    params.put("first_name", firstName);
+                    params.put("last_name", lastName);
+                    params.put("email", email);
+                    params.put("password", password);
+
+                    return params;
+                }
+
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String,String> params = new HashMap<String, String>();
+                    params.put("Content-Type","application/x-www-form-urlencoded");
+                    return params;
+                }
+            };
+            queue.add(stringRequest);
         }
         else {
             showSnackBarMessage("Enter valid details!");
         }
     }
 
-    private void registerProcess(User user) {
+    /*private void registerProcess(User user) {
         compositeSubscription.add(NetworkUtil.getRetroFit().register(user)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(this::handleResponse, this::handleError));
+    }*/
+
+    /*private void handleResponse(Response response) {
+        showSnackBarMessage(response.getMessage());
     }
 
-    private void handleResponse(Response response) {
-        //Toast.makeText(this, response., Toast.LENGTH_SHORT).show();
-    }
 
     private void handleError(Throwable error) {
         if(error instanceof HttpException) {
@@ -121,14 +168,14 @@ public class ActivityRegister extends AppCompatActivity {
             try {
                 String errorBody = ((HttpException)error).response().errorBody().string();
                 Response response = gson.fromJson(errorBody, Response.class);
-                showSnackBarMessage(response.message());
+                showSnackBarMessage(response.getMessage());
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
         }
         else showSnackBarMessage("Network error!");
-    }
+    }*/
 
     private void showSnackBarMessage(String message) {
         if(getCurrentFocus() != null) {

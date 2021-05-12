@@ -1,0 +1,5 @@
+<root>
+    <item name='android.os.Looper void setObserver(android.os.Looper.Observer) 0'>
+        <annotation name='org.jetbrains.annotations.Nullable' />
+    </item>
+</root>

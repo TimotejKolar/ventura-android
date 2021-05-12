@@ -7,7 +7,6 @@ public class User {
     private String lastName;
     private String email;
     private String password;
-    private String uuid;
 
 
     public User(String firstName, String lastName, String email, String password) {
@@ -15,7 +14,6 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.uuid = UUID.randomUUID().toString().replace("-", "");
     }
 
 
@@ -49,13 +47,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 }
