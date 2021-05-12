@@ -9,7 +9,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RetroFitInterface {
-    @POST("/register")
+    @POST("users/register/")
     Observable<Response> register(@Body User user);
 
     @POST("authenticate")
