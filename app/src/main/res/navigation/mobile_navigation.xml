@@ -12,14 +12,24 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.ventura.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_sessions"
+        android:name="com.example.ventura.ui.sessions.SessionsFragment"
+        android:label="@string/title_sessions"
+        tools:layout="@layout/sessions_fragment" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.ventura.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_record"
+        android:name="com.example.ventura.ui.record.RecordFragment"
+        android:label="@string/title_record"
+        tools:layout="@layout/record_fragment" />
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.ventura.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.example.ventura.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/settings_fragment" />
 </navigation>
