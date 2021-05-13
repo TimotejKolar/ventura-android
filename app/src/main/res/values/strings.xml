@@ -39,4 +39,9 @@
     <string name="start_activity">Start activity</string>
     <string name="back">Back</string>
     <string name="uploadPicture">Upload a picture</string>
+    <string name="button_start">Start</string>
+    <string name="button_pause">Pause</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_location">Show location</string>
+    <string name="textView_elapsed_time">Elapsed time:</string>
 </resources>

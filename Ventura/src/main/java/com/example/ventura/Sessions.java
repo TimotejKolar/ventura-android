@@ -40,4 +40,7 @@ public class Sessions {
     public Session getSessionAtPos(int pos){
         return sessions.get(pos);
     }
+
+    public void addActivity(Session sesh) {
+    }
 }
