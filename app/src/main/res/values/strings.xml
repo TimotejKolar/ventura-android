@@ -36,4 +36,9 @@
     <string name="help_record">Start recording a workout</string>
     <string name="help_profile">See and edit your profile</string>
     <string name="help_settings">Configure your user settings</string>
+    <string name="button_start">Start</string>
+    <string name="button_pause">Pause</string>
+    <string name="button_stop">Stop</string>
+    <string name="button_location">Show location</string>
+    <string name="textView_elapsed_time">Elapsed time:</string>
 </resources>

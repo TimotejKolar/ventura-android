@@ -39,5 +39,4 @@ public class MyApplication extends Application {
         return sessions;
     }
 
-
 }
