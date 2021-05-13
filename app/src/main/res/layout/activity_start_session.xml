@@ -6,4 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".StartSessionActivity">
 
+    <org.osmdroid.views.MapView
+        android:id="@+id/maperino"
+        android:layout_width="415dp"
+        android:layout_height="602dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:onClick="startActivity"
+        android:text="@string/start_activity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.416"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerActivityType" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="110dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:onClick="goBack"
+        android:text="@string/back"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerActivityType" />
+
+    <Spinner
+        android:id="@+id/spinnerActivityType"
+        android:layout_width="204dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/maperino" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -111,7 +111,7 @@ public class ActivityRegister extends AppCompatActivity {
         if(nErrors == 0) {
             RequestQueue queue = Volley.newRequestQueue(this);
             User user = new User(firstName, lastName, email, password);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.178.68:3001/users/register",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, URLConstants.ip+"/users/register",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {

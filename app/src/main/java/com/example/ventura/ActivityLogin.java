@@ -83,15 +83,14 @@ public class ActivityLogin extends AppCompatActivity {
 
         if (nErrors == 0) {
             RequestQueue queue = Volley.newRequestQueue(this);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://192.168.178.68:3001/users/login",
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,URLConstants.ip+"/users/login",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
                             sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = sp.edit();
                             try {
-                                JSONArray arr = new JSONArray(response);
-                                JSONObject obj = arr.getJSONObject(0);
+                                JSONObject obj = new JSONObject(response);
                                 app.getUser().setFirstName(obj.getString("first_name"));
                                 app.getUser().setLastName(obj.getString("last_name"));
                                 app.getUser().setEmail(obj.getString("email"));
@@ -101,8 +100,10 @@ public class ActivityLogin extends AppCompatActivity {
                                 editor.putString("email",app.getUser().getEmail());
                                 editor.putString("userId",app.getUser().getId());
                                 editor.apply();
+                                Log.i("asd","success");
                             } catch (JSONException e) {
                                 e.printStackTrace();
+                                Log.i("asd",e.getMessage());
                             }
                             Toast.makeText(ActivityLogin.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getBaseContext(), MainActivity.class);
