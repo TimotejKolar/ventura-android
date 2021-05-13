@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+
 public class MyApplication extends Application {
     private Sessions sessions;
     private User user;

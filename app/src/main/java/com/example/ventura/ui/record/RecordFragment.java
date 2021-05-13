@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.example.ventura.R;
 import com.example.ventura.StartSessionActivity;
 
 public class RecordFragment extends Fragment {
+
     private RecordViewModel mViewModel;
 
     public static RecordFragment newInstance() {
@@ -34,9 +34,13 @@ public class RecordFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(RecordViewModel.class);
-        // TODO: Use the ViewModel
-        Intent intent = new Intent(getContext(), StartSessionActivity.class);
-        startActivity(intent);
+        Intent i = new Intent(this.getActivity(), StartSessionActivity.class);
+        startActivity(i);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
 }
