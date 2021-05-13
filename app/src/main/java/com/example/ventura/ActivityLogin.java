@@ -3,7 +3,9 @@ package com.example.ventura;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -22,6 +24,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +41,8 @@ public class ActivityLogin extends AppCompatActivity {
     private TextView textViewRegister;
     private TextView textViewForgotPassword;
     private CompositeSubscription compositeSubscription;
+    SharedPreferences sp;
+    MyApplication app;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,8 @@ public class ActivityLogin extends AppCompatActivity {
 
         textViewRegister.setOnClickListener(view -> showRegisterForm());
         buttonLogin.setOnClickListener(view -> login());
+
+        app = (MyApplication) getApplication();
     }
 
     private void showRegisterForm() {
@@ -77,6 +87,23 @@ public class ActivityLogin extends AppCompatActivity {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                            SharedPreferences.Editor editor = sp.edit();
+                            try {
+                                JSONArray arr = new JSONArray(response);
+                                JSONObject obj = arr.getJSONObject(0);
+                                app.getUser().setFirstName(obj.getString("first_name"));
+                                app.getUser().setLastName(obj.getString("last_name"));
+                                app.getUser().setEmail(obj.getString("email"));
+                                app.getUser().setId(obj.getString("_id"));
+                                editor.putString("first_name",app.getUser().getFirstName());
+                                editor.putString("last_name",app.getUser().getLastName());
+                                editor.putString("email",app.getUser().getEmail());
+                                editor.putString("userId",app.getUser().getId());
+                                editor.apply();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             Toast.makeText(ActivityLogin.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getBaseContext(), MainActivity.class);
                             startActivity(intent);
