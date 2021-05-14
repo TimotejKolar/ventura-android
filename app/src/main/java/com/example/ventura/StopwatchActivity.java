@@ -24,6 +24,8 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+
+
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
 
@@ -55,6 +57,7 @@ public class StopwatchActivity extends AppCompatActivity {
     private Session session;
 
 
+
     String[] PERMISSIONS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.INTERNET,
@@ -62,6 +65,7 @@ public class StopwatchActivity extends AppCompatActivity {
             android.Manifest.permission.ACCESS_NETWORK_STATE,
             android.Manifest.permission.CAMERA
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,17 +84,22 @@ public class StopwatchActivity extends AppCompatActivity {
                     = savedInstanceState
                     .getBoolean("wasRunning");
         }
+
+
+        map = (MapView) findViewById(R.id.stopwatchMap);
+
         Session sesh = new Session();
         app.getSessions().addSession(sesh);
         session = app.getSessions().getSessions().get(0);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        map = (MapView) findViewById(R.id.mapStopwatch);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
         polyline = new Polyline();
         pathPoints = new ArrayList<GeoPoint>();
         map.getOverlays().add(polyline);
+
+        dist = (TextView)findViewById(R.id.textViewDistance);
 
         runTimer();
     }
@@ -168,11 +177,6 @@ public class StopwatchActivity extends AppCompatActivity {
 
         }
     }
-    /*@SuppressLint("MissingPermission")
-    public void initMapStartGPS() {
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,5,mLocationListener);
-    }*/
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private Marker getPositionMarker() { //Singelton
@@ -201,6 +205,11 @@ public class StopwatchActivity extends AppCompatActivity {
                         if (location != null) {
                             startPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
                             mapController.setCenter(startPoint);
+                            session.setStartTime(location.getTime());
+                            session.addLatitude(location.getLatitude());
+                            session.addLongtitude(location.getLongitude());
+                            session.addElevation(location.getAltitude());
+                            session.addSpeed(location.getSpeed());
                         }
                     }
                 });
@@ -268,6 +277,7 @@ public class StopwatchActivity extends AppCompatActivity {
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
+
             if(running) {
                 DecimalFormat df2 = new DecimalFormat("#.##");
                 IMapController mapController = map.getController();
@@ -289,6 +299,7 @@ public class StopwatchActivity extends AppCompatActivity {
 
                 map.invalidate();
             }
+
         }
     };
 }

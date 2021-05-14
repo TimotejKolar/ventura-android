@@ -7,7 +7,11 @@
     tools:context=".StartSessionActivity">
 
     <org.osmdroid.views.MapView
+<<<<<<< HEAD
+        android:id="@+id/stopwatchMap"
+=======
         android:id="@+id/mapStopwatch"
+>>>>>>> refs/remotes/origin/master
         android:layout_width="415dp"
         android:layout_height="602dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +26,11 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
+        app:layout_constraintTop_toBottomOf="@+id/stopwatchMap" />
+=======
         app:layout_constraintTop_toBottomOf="@+id/mapStopwatch" />
+>>>>>>> refs/remotes/origin/master
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
