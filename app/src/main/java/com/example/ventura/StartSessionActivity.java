@@ -99,6 +99,7 @@ public class StartSessionActivity extends AppCompatActivity {
                         if (location != null) {
                             startPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
                             mapController.setCenter(startPoint);
+                            
                         }
                     }
                 });
