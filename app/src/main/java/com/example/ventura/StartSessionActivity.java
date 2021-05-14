@@ -77,6 +77,7 @@ public class StartSessionActivity extends AppCompatActivity {
         dropdown = findViewById(R.id.spinnerActivityType);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, types);
         dropdown.setAdapter(adapter);
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         map = (MapView) findViewById(R.id.map);
         map.setTileSource(TileSourceFactory.MAPNIK);
@@ -187,6 +188,7 @@ public class StartSessionActivity extends AppCompatActivity {
 
     public void onStartActivityButtonClick(View view) {
         Intent intent = new Intent(this, StopwatchActivity.class);
+        intent.putExtra("activityType", dropdown.getSelectedItem().toString());
         startActivity(intent);
     }
 }

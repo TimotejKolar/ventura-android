@@ -3,6 +3,7 @@ package com.example.ventura;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 public class Session {
     private ArrayList<Double> speeds;
@@ -15,6 +16,7 @@ public class Session {
     private long startTime;
     private long endTime;
     private long duration;
+    private String uuid;
 
     public String getActivityType() {
         return activityType;
@@ -48,7 +50,13 @@ public class Session {
         this.endTime = endTime;
     }
 
+    public String getUuid() {
+        return uuid;
+    }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public long getStartTime() {
         return startTime;
@@ -138,12 +146,14 @@ public class Session {
         this.speeds = speeds;
         this.elevation = inclination;
         this.distance = distance;
+        this.uuid = UUID.randomUUID().toString().replace("-","");
     }
     public Session(){
         latitude = new ArrayList<Double>();
         longtitude = new ArrayList<Double>();
         speeds = new ArrayList<Double>();
         elevation = new ArrayList<Double>();
+        this.uuid = UUID.randomUUID().toString().replace("-","");
     }
     public void addLatitude(double lat){
         latitude.add(lat);

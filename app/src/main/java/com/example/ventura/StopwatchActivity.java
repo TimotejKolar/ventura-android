@@ -6,12 +6,15 @@ import androidx.core.app.ActivityCompat;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,6 +56,7 @@ public class StopwatchActivity extends AppCompatActivity {
     double distance;
     private Location lok;
     private Session session;
+    private String activityType;
 
 
     String[] PERMISSIONS = {
@@ -82,7 +86,9 @@ public class StopwatchActivity extends AppCompatActivity {
         }
         Session sesh = new Session();
         app.getSessions().addSession(sesh);
-        session = app.getSessions().getSessions().get(0);
+        session = app.getSessions().getSessions().get(app.getSessions().size()-1);
+        activityType = getIntent().getStringExtra("activityType");
+        s.setActivityType(activityType);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         map = (MapView) findViewById(R.id.mapStopwatch);
@@ -137,7 +143,13 @@ public class StopwatchActivity extends AppCompatActivity {
     {
         running = false;
         seconds = 0;
+        app.getSessions().addSession(s);
+        app.saveData();
+        Intent intent = new Intent(this, SaveSessionActivity.class);
+        intent.putExtra("SessionUUID", s.getUuid());
+        startActivity(intent);
     }
+
     public static boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
             for (String permission : permissions) {
@@ -279,6 +291,7 @@ public class StopwatchActivity extends AppCompatActivity {
                 distance = polyline.getDistance();
                 String stringedDistance = df2.format(distance).toString();
                 s.setDistance(distance);
+                s.setStartTime(location.getTime());
                 s.setEndTime(location.getTime());
                 s.addLatitude(location.getLatitude());
                 s.addLongtitude(location.getLongitude());

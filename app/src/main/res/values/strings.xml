@@ -44,4 +44,11 @@
     <string name="button_stop">Stop</string>
     <string name="button_location">Show location</string>
     <string name="textView_elapsed_time">Elapsed time:</string>
+    <string name="title_activity_save_session">SaveSessionActivity</string>
+    <string name="editText_session_name">Session name</string>
+    <string name="button_save_session">Save</string>
+    <string name="button_delete_session">Delete</string>
+
+
+
 </resources>

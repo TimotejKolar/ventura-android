@@ -15,11 +15,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ventura"
-        android:usesCleartextTraffic="true"
-        >
-        <activity android:name=".StopwatchActivity" android:launchMode="singleInstance"></activity>
-        <activity android:name=".StartSessionActivity" android:launchMode="singleInstance"/>
-        <activity android:name=".LaunchActivity" android:launchMode="singleInstance">
+        android:usesCleartextTraffic="true">
+        <activity android:name=".SaveSessionActivity"></activity>
+        <activity
+            android:name=".StopwatchActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".StartSessionActivity"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".LaunchActivity"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,9 +35,13 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:launchMode="singleInstance"/>
-        <activity android:name=".ActivityRegister" android:launchMode="singleInstance"/>
-        <activity android:name=".ActivityLogin" android:launchMode="singleInstance"/>
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ActivityRegister"
+            android:launchMode="singleInstance" />
+        <activity
+            android:name=".ActivityLogin"
+            android:launchMode="singleInstance" />
     </application>
 
 </manifest>
