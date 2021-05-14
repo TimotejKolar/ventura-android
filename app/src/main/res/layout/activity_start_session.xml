@@ -7,37 +7,13 @@
     tools:context=".StartSessionActivity">
 
     <org.osmdroid.views.MapView
-        android:id="@+id/maperino"
+        android:id="@+id/mapStopwatch"
         android:layout_width="415dp"
         android:layout_height="602dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:onClick="startActivity"
-        android:text="@string/start_activity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.416"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerActivityType" />
-
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="110dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="16dp"
-        android:onClick="goBack"
-        android:text="@string/back"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerActivityType" />
 
     <Spinner
         android:id="@+id/spinnerActivityType"
@@ -46,7 +22,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maperino" />
+        app:layout_constraintTop_toBottomOf="@+id/mapStopwatch" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
@@ -71,7 +47,8 @@
         android:id="@+id/buttonStartActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="44dp"
+        android:onClick="onStartActivityButtonClick"
         android:text="@string/button_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

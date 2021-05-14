@@ -16,6 +16,19 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import org.osmdroid.api.IMapController;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Polyline;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class StopwatchActivity extends AppCompatActivity {
@@ -24,8 +37,24 @@ public class StopwatchActivity extends AppCompatActivity {
     private int seconds = 0;
     private boolean running;
     private boolean wasRunning;
+    private MapView map;
+    private FusedLocationProviderClient fusedLocationClient;
+    private MyApplication app;
+    protected LocationManager locationManager;
+    TextView asd;
+    TextView dist;
+    String provider;
+    GeoPoint startPoint;
+    IMapController mapController;
+    Marker marker;
+    Session s = new Session();
+    private Polyline polyline;
+    private ArrayList<GeoPoint> pathPoints;
+    double distance;
+    private Location lok;
+    private Session session;
 
-    public MyApplication app;
+
     String[] PERMISSIONS = {
             android.Manifest.permission.ACCESS_FINE_LOCATION,
             android.Manifest.permission.INTERNET,
@@ -33,8 +62,6 @@ public class StopwatchActivity extends AppCompatActivity {
             android.Manifest.permission.ACCESS_NETWORK_STATE,
             android.Manifest.permission.CAMERA
     };
-    LocationManager locationManager;
-    Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +81,16 @@ public class StopwatchActivity extends AppCompatActivity {
                     .getBoolean("wasRunning");
         }
         Session sesh = new Session();
-        app.getSessions().addActivity(sesh);
+        app.getSessions().addSession(sesh);
         session = app.getSessions().getSessions().get(0);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        map = (MapView) findViewById(R.id.mapStopwatch);
+        map.setTileSource(TileSourceFactory.MAPNIK);
+        map.setMultiTouchControls(true);
+        polyline = new Polyline();
+        pathPoints = new ArrayList<GeoPoint>();
+        map.getOverlays().add(polyline);
 
         runTimer();
     }
@@ -83,6 +118,15 @@ public class StopwatchActivity extends AppCompatActivity {
         super.onResume();
         if (wasRunning) {
             running = true;
+        }
+    }
+
+    protected void onStart() {
+        super.onStart();
+        if (!hasPermissions(this,PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        } else {
+            initMapStartGPS();
         }
     }
 
@@ -124,10 +168,43 @@ public class StopwatchActivity extends AppCompatActivity {
 
         }
     }
-    @SuppressLint("MissingPermission")
+    /*@SuppressLint("MissingPermission")
     public void initMapStartGPS() {
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5,5,mLocationListener);
+    }*/
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private Marker getPositionMarker() { //Singelton
+        if (marker==null) {
+            marker = new Marker(map);
+            marker.setTitle("Here I am");
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            marker.setIcon(getResources().getDrawable(R.drawable.location_icon));
+            map.getOverlays().add(marker);
+        }
+        return marker;
+    }
+
+    @SuppressLint("MissingPermission")
+    public void initMapStartGPS() {
+        mapController = map.getController();
+        mapController.setZoom(18.5);
+
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,mLocationListener);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            startPoint = new GeoPoint(location.getLatitude(),location.getLongitude());
+                            mapController.setCenter(startPoint);
+                        }
+                    }
+                });
+        map.invalidate();
     }
     public void onClickPause(View view)
     {
@@ -191,7 +268,27 @@ public class StopwatchActivity extends AppCompatActivity {
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
         public void onLocationChanged(final Location location) {
+            if(running) {
+                DecimalFormat df2 = new DecimalFormat("#.##");
+                IMapController mapController = map.getController();
+                mapController.setZoom(18.5);
+                GeoPoint startPoint = new GeoPoint(location.getLatitude(), location.getLongitude()); //Postavi GPS lokacijo
+                pathPoints.add(startPoint);
+                polyline.setPoints(pathPoints);
+                mapController.setCenter(startPoint);
+                distance = polyline.getDistance();
+                String stringedDistance = df2.format(distance).toString();
+                s.setDistance(distance);
+                s.setEndTime(location.getTime());
+                s.addLatitude(location.getLatitude());
+                s.addLongtitude(location.getLongitude());
+                s.addElevation(location.getAltitude());
+                s.addSpeed(location.getSpeed());
+                stringedDistance += "m";
+                //dist.setText(stringedDistance);
 
+                map.invalidate();
+            }
         }
     };
 }

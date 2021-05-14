@@ -3,6 +3,7 @@ package com.example.ventura;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 
 public class MyApplication extends Application {
@@ -26,10 +27,14 @@ public class MyApplication extends Application {
             user.setLastName(sp.getString(TAG_LASTNAME,"/"));
             user.setId(sp.getString(TAG_USERID,"/"));
             isLoggedIn = true;
+            //SharedPreferences.Editor editor = sp.edit();
+            //editor.putString(TAG_UUID, APP_UUID);
+            //editor.apply();
         }
         else{
             isLoggedIn = false;
         }
+        sessions = new Sessions();
     }
 
     public User getUser(){
