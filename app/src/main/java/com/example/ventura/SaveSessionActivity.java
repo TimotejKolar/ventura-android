@@ -20,12 +20,19 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,9 +58,9 @@ public class SaveSessionActivity extends AppCompatActivity {
         buttonSaveSession = findViewById(R.id.buttonSaveSession);
         buttonDeleteSession = findViewById(R.id.buttonDeleteSession);
 
-        dropdown = findViewById(R.id.spinnerActivityType);
+        /*dropdown = findViewById(R.id.spinnerActivityType);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, types);
-        dropdown.setAdapter(adapter);
+        dropdown.setAdapter(adapter);*/
 
         sessionUUID = getIntent().getStringExtra("SessionUUID");
         for(int i = 0; i < app.getSessions().size(); i++) {
@@ -92,14 +99,14 @@ public class SaveSessionActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("title", session.getActivityName());
-                params.put("lattitude", session.getLatitude().toString());
+                params.put("latitude", session.getLatitude().toString());
                 params.put("longtitude", session.getLongtitude().toString());
                 params.put("speed", session.getSpeeds().toString());
                 params.put("elevation", session.getElevation().toString());
                 params.put("distance", String.valueOf(session.getDistance()));
                 params.put("type", session.getActivityType());
                 params.put("start_time", Long.toString(session.getStartTime()));
-                params.put("end_time", Long.toString(session.getEndTime()));
+                params.put("elapsed_time", Long.toString(session.getDuration()));
                 params.put("user", userID);
 
                 return params;

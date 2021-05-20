@@ -278,6 +278,7 @@ public class StopwatchActivity extends AppCompatActivity {
                 // seconds variable.
                 if (running) {
                     seconds++;
+                    s.setDuration(seconds);
                 }
 
                 // Post the code again
