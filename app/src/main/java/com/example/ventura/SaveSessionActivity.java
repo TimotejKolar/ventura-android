@@ -75,6 +75,7 @@ public class SaveSessionActivity extends AppCompatActivity {
     public void onSaveSessionClick(View view) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String userID = sp.getString("userId", null);
+        String jwt = sp.getString("jwt", null);
         if(TextUtils.isEmpty(etSessionName.getText())) {
             etSessionName.setError("Session name should not be empty!");
         }
@@ -115,7 +116,7 @@ public class SaveSessionActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
+                params.put("x-auth-token", jwt);
                 return params;
             }
         };

@@ -91,14 +91,16 @@ public class ActivityLogin extends AppCompatActivity {
                             SharedPreferences.Editor editor = sp.edit();
                             try {
                                 JSONObject obj = new JSONObject(response);
-                                app.getUser().setFirstName(obj.getString("first_name"));
-                                app.getUser().setLastName(obj.getString("last_name"));
-                                app.getUser().setEmail(obj.getString("email"));
-                                app.getUser().setId(obj.getString("_id"));
+                                JSONObject objData = new JSONObject(obj.getString("_doc"));
+                                app.getUser().setFirstName(objData.getString("first_name"));
+                                app.getUser().setLastName(objData.getString("last_name"));
+                                app.getUser().setEmail(objData.getString("email"));
+                                app.getUser().setId(objData.getString("_id"));
                                 editor.putString("first_name",app.getUser().getFirstName());
                                 editor.putString("last_name",app.getUser().getLastName());
                                 editor.putString("email",app.getUser().getEmail());
                                 editor.putString("userId",app.getUser().getId());
+                                editor.putString("jwt", obj.getString("jwt")); //Pri logout se mora to izbrisati!
                                 editor.apply();
                                 Log.i("asd","success");
                             } catch (JSONException e) {
