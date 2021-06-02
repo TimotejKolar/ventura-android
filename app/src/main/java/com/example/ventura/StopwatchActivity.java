@@ -126,7 +126,7 @@ public class StopwatchActivity extends AppCompatActivity {
     {
         super.onPause();
         wasRunning = running;
-        running = false;
+        //running = false;
     }
     protected void onResume()
     {
@@ -309,8 +309,7 @@ public class StopwatchActivity extends AppCompatActivity {
                 s.addElevation(location.getAltitude());
                 s.addSpeed(location.getSpeed());
                 stringedDistance += "m";
-                //dist.setText(stringedDistance);
-
+                dist.setText(stringedDistance);
                 map.invalidate();
             }
 

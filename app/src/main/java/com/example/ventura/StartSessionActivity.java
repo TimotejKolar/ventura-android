@@ -12,7 +12,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -79,7 +78,7 @@ public class StartSessionActivity extends AppCompatActivity {
         dropdown.setAdapter(adapter);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        map = (MapView) findViewById(R.id.map);
+        map = (MapView) findViewById(R.id.mapRV);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
     }
