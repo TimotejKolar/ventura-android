@@ -26,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.ventura.ActivitySessionDetails;
 import com.example.ventura.AdapterSession;
 import com.example.ventura.MyApplication;
 import com.example.ventura.R;
@@ -33,6 +34,7 @@ import com.example.ventura.Session;
 import com.example.ventura.Sessions;
 import com.example.ventura.URLConstants;
 import com.example.ventura.VolleyCallback;
+import com.example.ventura.VolleyCallbackSession;
 
 
 import org.json.JSONArray;
@@ -90,9 +92,9 @@ public class SessionsFragment extends Fragment {
         adapter = new AdapterSession(app, new AdapterSession.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                /*Intent i = new Intent(getActivity().getBaseContext(), SessionsFragment.class);
-                i.putExtra("MovieUUID", ch.getMovieArrayList().get(position).getUuid());
-                startActivity(i);*/
+                Intent i = new Intent(getActivity().getBaseContext(), ActivitySessionDetails.class);
+                i.putExtra("SessionUUID", ss.getSessions().get(position).getUuid());
+                startActivity(i);
             }
 
             @Override
@@ -150,6 +152,7 @@ public class SessionsFragment extends Fragment {
                                 session.setDistance(Double.parseDouble(obj.getString("distance")));
                                 session.setStartTime(miliseconds);
                                 session.setDuration(Long.parseLong(obj.getString("elapsed_time")));
+                                session.setUuid(obj.getString("_id"));
                                 sessions.addSession(session);
                             }
                         } catch (JSONException e) {

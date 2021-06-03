@@ -20,8 +20,7 @@
         android:icon="@drawable/profile_icon1"
         android:title="@string/title_profile" />
     <item
-        android:id="@+id/navigation_settings"
-        android:icon="@drawable/icon_settings"
-        android:title="@string/title_settings" />
-
+        android:id="@+id/navigation_camera"
+        android:icon="@drawable/camera_icon"
+        android:title="@string/title_camera" />
 </menu>

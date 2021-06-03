@@ -1,48 +1,23 @@
 package com.example.ventura;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.core.util.InternCache;
-import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Polyline;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHolder> {
     private MyApplication app;
@@ -91,6 +66,7 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
             holder.textViewDurationValue.setText(Integer.toString((int)durationSeconds) + "s");
         }
         drawPath(holder.map, s.getLatitude(), s.getLongtitude());
+        Log.i("asd", "test");
     }
 
     public void drawPath(MapView map, ArrayList<Double> latitude, ArrayList<Double> longitude) {

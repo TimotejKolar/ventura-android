@@ -28,8 +28,8 @@
         android:label="@string/title_profile"
         tools:layout="@layout/profile_fragment" />
     <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.example.ventura.ui.settings.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/settings_fragment" />
+        android:id="@+id/navigation_camera"
+        android:name="com.example.ventura.ui.camera.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" />
 </navigation>

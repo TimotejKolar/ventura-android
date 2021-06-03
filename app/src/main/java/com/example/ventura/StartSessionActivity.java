@@ -78,7 +78,7 @@ public class StartSessionActivity extends AppCompatActivity {
         dropdown.setAdapter(adapter);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        map = (MapView) findViewById(R.id.mapRV);
+        map = (MapView) findViewById(R.id.mapS);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
     }
