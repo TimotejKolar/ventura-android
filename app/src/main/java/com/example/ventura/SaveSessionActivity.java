@@ -92,7 +92,7 @@ public class SaveSessionActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("title", session.getActivityName());
-                params.put("lattitude", session.getLatitude().toString());
+                params.put("latitude", session.getLatitude().toString());
                 params.put("longtitude", session.getLongtitude().toString());
                 params.put("speed", session.getSpeeds().toString());
                 params.put("elevation", session.getElevation().toString());
