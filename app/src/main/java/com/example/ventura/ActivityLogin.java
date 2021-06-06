@@ -96,6 +96,7 @@ public class ActivityLogin extends AppCompatActivity {
                                 app.getUser().setLastName(objData.getString("last_name"));
                                 app.getUser().setEmail(objData.getString("email"));
                                 app.getUser().setId(objData.getString("_id"));
+                                app.getUser().setJwt(obj.getString("jwt"));
                                 editor.putString("first_name",app.getUser().getFirstName());
                                 editor.putString("last_name",app.getUser().getLastName());
                                 editor.putString("email",app.getUser().getEmail());

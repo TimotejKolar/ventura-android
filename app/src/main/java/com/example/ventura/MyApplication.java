@@ -25,6 +25,8 @@ public class MyApplication extends Application {
     private static final String TAG_FIRSTNAME = "first_name";
     private static final String TAG_LASTNAME = "last_name";
     private static final String MY_FILE_NAME = "data.json";
+    private static final String TAG_JWT = "jwt";
+
     private Gson gson;
     private File file;
     SharedPreferences sp;
@@ -39,6 +41,7 @@ public class MyApplication extends Application {
             user.setFirstName(sp.getString(TAG_FIRSTNAME, "/"));
             user.setLastName(sp.getString(TAG_LASTNAME, "/"));
             user.setId(sp.getString(TAG_USERID, "/"));
+            user.setJwt(sp.getString(TAG_JWT,"/"));
             isLoggedIn = true;
         } else {
             isLoggedIn = false;
@@ -46,6 +49,15 @@ public class MyApplication extends Application {
         if (!readFromFile()) {
             sessions = new Sessions();
         }
+    }
+    public void clearPreferences(){
+        sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sp.edit().remove(TAG_EMAIL).apply();
+        sp.edit().remove(TAG_USERID).apply();
+        sp.edit().remove(TAG_FIRSTNAME).apply();
+        sp.edit().remove(TAG_LASTNAME).apply();
+        sp.edit().remove(TAG_JWT).apply();
+        isLoggedIn = false;
     }
 
     public User getUser() {

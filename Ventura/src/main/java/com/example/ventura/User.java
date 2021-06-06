@@ -8,6 +8,7 @@ public class User {
     private String email;
     private String password;
     private String id;
+    private String jwt;
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -15,6 +16,14 @@ public class User {
         this.email = email;
         this.password = password;
 
+    }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
 
     public User() {

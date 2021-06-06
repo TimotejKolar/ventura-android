@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ventura.ActivityLogin;
+import com.example.ventura.LaunchActivity;
 import com.example.ventura.MainActivity;
 import com.example.ventura.MyApplication;
 import com.example.ventura.R;
@@ -40,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private ProfileViewModel mViewModel;
     private TextView textViewName;
@@ -53,12 +55,22 @@ public class ProfileFragment extends Fragment {
     public MyApplication app;
     private int totalDistance = 0;
     private int numActivities = 0;
+    Button btn;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.profile_fragment, container, false);
-    }
+        View rootView = inflater.inflate(R.layout.profile_fragment, container,         false);
 
+        btn = (Button) rootView.findViewById(R.id.buttonLogout);
+        btn.setOnClickListener(this);
+        return rootView;
+    }
+    @Override
+    public void onClick(View v) {
+        app.clearPreferences();
+        Intent i = new Intent(this.getActivity(), LaunchActivity.class);
+        startActivity(i);
+    }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -67,8 +79,11 @@ public class ProfileFragment extends Fragment {
         textViewName = (TextView)getView().findViewById(R.id.textViewName);
         String text = app.getUser().getFirstName() + " " + app.getUser().getLastName();
         textViewName.setText(text);
+        textViewDistance = (TextView)getView().findViewById(R.id.textViewDist);
+        textViewNumActivities = (TextView)getView().findViewById(R.id.textViewActivities);
+        Log.i("asd","error: " + app.getUser().getJwt());
         RequestQueue queue = Volley.newRequestQueue(this.getActivity());
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLConstants.ip+"/activities/user/"+app.getUser().getId(),
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLConstants.ip+"/activities/user/"+app.getUser().getId(),
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -97,7 +112,16 @@ public class ProfileFragment extends Fragment {
                 Log.i("asd", error.toString());
                 Toast.makeText(getActivity(), "Error getting data", Toast.LENGTH_SHORT).show();
             }
-        });
+        })
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("x-auth-token", app.getUser().getJwt());
+            return params;
+        }
+        };
         queue.add(stringRequest);
 
     }

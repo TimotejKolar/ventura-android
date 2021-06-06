@@ -49,17 +49,15 @@
     <string name="editText_session_name">Session name</string>
     <string name="button_save_session">Save</string>
     <string name="button_delete_session">Delete</string>
-<<<<<<< HEAD
-    <string name="distance">Distance:</string>
-
-=======
     <string name="distance">Distance</string>
+    <string name="total_distance">Total distance:</string>
+    <string name="total_activities">Total activities:</string>
     <string name="duration">Duration</string>
     <string name="pace">Pace</string>
     <string name="elevation">Elevation gain</string>
     <string name="button_take_image">Take image</string>
     <string name="button_save_image">Save image</string>
->>>>>>> cfafe7259cbed84243af002bcdf534b5f3ca8426
+    <string name="logout">Log out</string>
 
 
 </resources>
