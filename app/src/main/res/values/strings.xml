@@ -31,6 +31,7 @@
     <string name="title_sessions">Sessions</string>
     <string name="title_record">Record</string>
     <string name="title_profile">Profile</string>
+    <string name="title_camera">Camera</string>
     <string name="help_home">Home screen (this screen)</string>
     <string name="help_sessions">See all your workout sessions</string>
     <string name="help_record">Start recording a workout</string>
@@ -48,8 +49,17 @@
     <string name="editText_session_name">Session name</string>
     <string name="button_save_session">Save</string>
     <string name="button_delete_session">Delete</string>
+<<<<<<< HEAD
     <string name="distance">Distance:</string>
 
+=======
+    <string name="distance">Distance</string>
+    <string name="duration">Duration</string>
+    <string name="pace">Pace</string>
+    <string name="elevation">Elevation gain</string>
+    <string name="button_take_image">Take image</string>
+    <string name="button_save_image">Save image</string>
+>>>>>>> cfafe7259cbed84243af002bcdf534b5f3ca8426
 
 
 </resources>

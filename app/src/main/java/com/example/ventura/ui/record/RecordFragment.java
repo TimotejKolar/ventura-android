@@ -41,6 +41,5 @@ public class RecordFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
     }
 }
