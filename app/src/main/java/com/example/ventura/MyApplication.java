@@ -18,6 +18,7 @@ import timber.log.Timber;
 
 public class MyApplication extends Application {
     private Sessions sessions;
+    private Heartbeats heartbeats;
     private User user;
     public boolean isLoggedIn;
     private static final String TAG_USERID = "userId";
@@ -48,6 +49,7 @@ public class MyApplication extends Application {
         }
         if (!readFromFile()) {
             sessions = new Sessions();
+            heartbeats = new Heartbeats();
         }
     }
     public void clearPreferences(){
@@ -67,6 +69,8 @@ public class MyApplication extends Application {
     public Sessions getSessions() {
         return sessions;
     }
+
+    public Heartbeats getHeartbeats(){return heartbeats;}
 
     public void saveData() {
         saveToFile();
@@ -90,6 +94,7 @@ public class MyApplication extends Application {
     private void saveToFile() {
         try {
             FileUtils.writeStringToFile(getFile(), getGson().toJson(sessions));
+            FileUtils.writeStringToFile(getFile(), getGson().toJson(heartbeats));
         } catch (IOException e) {
             Timber.d("Can't save file %s", file.getPath());
         }
@@ -99,6 +104,7 @@ public class MyApplication extends Application {
         if (!getFile().exists()) return false;
         try {
             sessions = getGson().fromJson(FileUtils.readFileToString(getFile()), Sessions.class);
+            heartbeats = getGson().fromJson(FileUtils.readFileToString(getFile()), Heartbeats.class);
         } catch (IOException e) {
             return false;
         }

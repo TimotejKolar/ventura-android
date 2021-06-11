@@ -37,8 +37,11 @@ public class Sessions {
     public int size(){
         return sessions.size();
     }
-    public Session getSessionAtPos(int pos){
-        return sessions.get(pos);
-    }
 
+    public Session getSessionAtPos(int position){
+        return sessions.get(position);
+    }
+    public void clear(){
+        sessions.clear();
+    }
 }

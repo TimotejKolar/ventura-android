@@ -1,9 +1,13 @@
 package com.example.ventura.ui.profile;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,11 +31,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ventura.ActivityLogin;
+import com.example.ventura.HeartbeatActivity;
 import com.example.ventura.LaunchActivity;
 import com.example.ventura.MainActivity;
 import com.example.ventura.MyApplication;
 import com.example.ventura.R;
 import com.example.ventura.URLConstants;
+import com.example.ventura.YourHeartbeatsActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,10 +62,33 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private int totalDistance = 0;
     private int numActivities = 0;
     Button btn;
+    Button heartbeat;
+    Button yourHearbeats;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.profile_fragment, container,         false);
+        heartbeat = (Button) rootView.findViewById(R.id.buttonHeartbeat);
+        yourHearbeats = (Button) rootView.findViewById(R.id.buttonYourHeartbeats);
+        heartbeat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED){
+                    ActivityCompat.requestPermissions(getActivity(), new String[] {Manifest.permission.CAMERA}, 100);
+                }
+                Intent i = new Intent(getActivity(), HeartbeatActivity.class);
+                startActivity(i);
+
+            }
+        });
+        yourHearbeats.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), YourHeartbeatsActivity.class);
+                startActivity(i);
+            }
+        });
 
         btn = (Button) rootView.findViewById(R.id.buttonLogout);
         btn.setOnClickListener(this);

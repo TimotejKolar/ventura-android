@@ -2,6 +2,7 @@ package com.example.ventura.ui.sessions;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ import com.example.ventura.VolleyCallbackSession;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.osmdroid.config.Configuration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,26 +76,24 @@ public class SessionsFragment extends Fragment {
         app = (MyApplication)getActivity().getApplication();
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
+        Context ctx = getContext();
+        Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
+        getSessions();
+        initAdapter();
 
-        getSessions(new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(Sessions sessions) {
-                ss = sessions;
-                initDialog();
-                initAdapter();
-            }
-        });
+
     }
 
 
     private void initDialog() {}
 
     private void initAdapter() {
+        app.getSessions().clear();
         adapter = new AdapterSession(app, new AdapterSession.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
                 Intent i = new Intent(getActivity().getBaseContext(), ActivitySessionDetails.class);
-                i.putExtra("SessionUUID", ss.getSessions().get(position).getUuid());
+                i.putExtra("SessionUUID", app.getSessions().getSessionAtPos(position).getUuid());
                 startActivity(i);
             }
 
@@ -119,7 +119,7 @@ public class SessionsFragment extends Fragment {
         return doubleArrayList;
     }
 
-    public void getSessions(final VolleyCallback callback) {
+    public void getSessions() {
         Sessions sessions = new Sessions();
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(app.getApplicationContext());
         String userID = sp.getString("userId", null);
@@ -153,13 +153,15 @@ public class SessionsFragment extends Fragment {
                                 session.setStartTime(miliseconds);
                                 session.setDuration(Long.parseLong(obj.getString("elapsed_time")));
                                 session.setUuid(obj.getString("_id"));
-                                sessions.addSession(session);
+                                app.getSessions().addSession(session);
+                                adapter.notifyDataSetChanged();
+                                Log.i("asd","gotsessiosn");
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                             Log.i("asda",e.getMessage());
                         }
-                        callback.onSuccessResponse(sessions);
+
                         //adapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
