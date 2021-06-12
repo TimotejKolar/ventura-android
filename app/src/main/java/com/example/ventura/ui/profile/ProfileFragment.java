@@ -59,7 +59,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
     public View root;
     public MyApplication app;
-    private int totalDistance = 0;
+    private double totalDistance = 0;
     private int numActivities = 0;
     Button btn;
     Button heartbeat;
@@ -125,7 +125,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
                                 numActivities++;
                             }
                             Log.i("asd","success");
-                            String dist = "Total distance: " + totalDistance;
+                            String dist;
+                            if(totalDistance > 1000){
+                                totalDistance /= 1000;
+                                 dist = "Total distance: " + totalDistance +"km";
+                            }
+                            else{
+                                 dist = "Total distance: " + totalDistance +"m";
+
+                            }
                             String act = "Total activities: " + numActivities;
                             textViewDistance.setText(dist);
                             textViewNumActivities.setText(act);
