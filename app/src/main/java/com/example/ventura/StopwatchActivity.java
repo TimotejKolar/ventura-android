@@ -31,6 +31,7 @@ import org.osmdroid.views.MapView;
 
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
+import org.osmdroid.views.overlay.compass.CompassOverlay;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -106,7 +107,9 @@ public class StopwatchActivity extends AppCompatActivity {
         map.getOverlays().add(polyline);
 
         dist = (TextView)findViewById(R.id.textViewDistance);
-
+        CompassOverlay compassOverlay = new CompassOverlay(this,map);
+        compassOverlay.enableCompass();
+        map.getOverlays().add(compassOverlay);
         runTimer();
     }
 

@@ -29,6 +29,7 @@ import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Polyline;
+import org.osmdroid.views.overlay.compass.CompassOverlay;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -81,6 +82,9 @@ public class StartSessionActivity extends AppCompatActivity {
         map = (MapView) findViewById(R.id.mapS);
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
+        CompassOverlay compassOverlay = new CompassOverlay(this,map);
+        compassOverlay.enableCompass();
+        map.getOverlays().add(compassOverlay);
     }
 
     @SuppressLint("MissingPermission")
