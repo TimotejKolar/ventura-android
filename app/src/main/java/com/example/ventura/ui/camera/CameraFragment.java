@@ -110,47 +110,6 @@ public class CameraFragment extends Fragment {
             public void onClick(View v) {
                 if (image != null) {
                     getLocation();
-                    String stringImage = getStringImage(image);
-                    SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
-                    String userID = sp.getString("userId", null);
-                    String jwt = sp.getString("jwt", null);
-
-                    RequestQueue queue = Volley.newRequestQueue(getContext());
-                    StringRequest stringRequest = new StringRequest(Request.Method.POST, URLConstants.ip + "/trafficSigns",
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String response) {
-                                    Toast.makeText(getContext(), "Image succcessfully uploaded!", Toast.LENGTH_SHORT).show();
-                                }
-                            }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.i("asd", error.toString());
-                        }
-                    }) {
-                        @Override
-                        protected Map<String, String> getParams() {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("image", stringImage);
-                            params.put("path", imagePath);
-                            params.put("latitude", Double.toString(latitude));
-                            params.put("longtitude", Double.toString(longitude));
-                            params.put("user", userID);
-                            params.put("type", "not set");
-
-                            return params;
-                        }
-
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            Map<String, String> params = new HashMap<String, String>();
-                            params.put("x-auth-token", jwt);
-                            return params;
-                        }
-                    };
-                    queue.add(stringRequest);
-                } else {
-                    Toast.makeText(getContext(), "Please take an image!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -171,7 +130,49 @@ public class CameraFragment extends Fragment {
                             if (location != null) {
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
+                                String stringImage = getStringImage(image);
+                                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+                                String userID = sp.getString("userId", null);
+                                String jwt = sp.getString("jwt", null);
+
+                                RequestQueue queue = Volley.newRequestQueue(getContext());
+                                StringRequest stringRequest = new StringRequest(Request.Method.POST, URLConstants.ip + "/trafficSigns",
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String response) {
+                                                Toast.makeText(getContext(), "Image succcessfully uploaded!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Log.i("asd", error.toString());
+                                    }
+                                }) {
+                                    @Override
+                                    protected Map<String, String> getParams() {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("image", stringImage);
+                                        params.put("path", imagePath);
+                                        params.put("latitude", Double.toString(latitude));
+                                        params.put("longtitude", Double.toString(longitude));
+                                        params.put("user", userID);
+                                        params.put("type", "not set");
+
+                                        return params;
+                                    }
+
+                                    @Override
+                                    public Map<String, String> getHeaders() throws AuthFailureError {
+                                        Map<String, String> params = new HashMap<String, String>();
+                                        params.put("x-auth-token", jwt);
+                                        return params;
+                                    }
+                                };
+                                queue.add(stringRequest);
+                            } else {
+                                Toast.makeText(getContext(), "Please take an image!", Toast.LENGTH_LONG).show();
                             }
+
                         }
                     });
     }
