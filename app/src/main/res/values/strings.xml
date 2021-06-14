@@ -58,6 +58,10 @@
     <string name="button_take_image">Take image</string>
     <string name="button_save_image">Save image</string>
     <string name="logout">Log out</string>
-
-
+    <string name="placefinger">Place finger on your camera</string>
+    <string name="yourpulse">Your pulse:</string>
+    <string name="save">Save</string>
+    <string name="monitorHearbeat">Monitor heartbeat</string>
+    <string name="heartbeatwillappear">Your average heartbeat per minute will appear here</string>
+    <string name="your_heartbeats">Your heartbeats</string>
 </resources>

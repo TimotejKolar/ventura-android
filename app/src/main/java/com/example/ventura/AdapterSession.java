@@ -29,7 +29,7 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
     public AdapterSession(MyApplication app, OnItemClickListener listener, Sessions sessions) {
         this.app = app;
         this.listener = listener;
-        this.sessions = sessions;
+        this.sessions = app.getSessions();
     }
 
     @NonNull
@@ -47,7 +47,7 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         double distance = 0, durationHours= 0, durationMinutes = 0, durationSeconds;
-        Session s = sessions.getSessionAtPos(position);
+        Session s = app.getSessions().getSessionAtPos(position);
         distance = s.getDistance()/1000;
         distance = round(distance, 2);
         durationMinutes = s.getDuration()/60;
