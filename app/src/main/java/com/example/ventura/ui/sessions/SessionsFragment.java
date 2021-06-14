@@ -80,9 +80,13 @@ public class SessionsFragment extends Fragment {
             public void onSuccessResponse(Sessions sessions) {
                 ss = sessions;
                 initDialog();
-                initAdapter();
+
+
+                adapter.notifyDataSetChanged();
+
             }
         });
+        initAdapter();
     }
 
 

@@ -23,7 +23,9 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
     private MyApplication app;
     private OnItemClickListener listener;
     private Sessions sessions;
-
+    public AdapterSession(){
+        sessions = new Sessions();
+    }
     public AdapterSession(MyApplication app, OnItemClickListener listener, Sessions sessions) {
         this.app = app;
         this.listener = listener;
@@ -91,7 +93,7 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
     }
 
     @Override
-    public int getItemCount() {return app.getSessions().getSessions().size();}
+    public int getItemCount() {return app.getSessions().size();}
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewTitleRV;
