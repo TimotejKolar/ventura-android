@@ -162,6 +162,14 @@ public class StopwatchActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onClickStartUnity(View view) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(app.getApplicationContext());
+        String jwt = sp.getString("jwt", null);
+        Intent intent = getPackageManager().getLaunchIntentForPackage("com.DefaultCompany.RGA");
+        intent.putExtra("jwt", jwt);
+        startActivity(intent);
+    }
+
     public static boolean hasPermissions(Context context, String... permissions) {
         if (context != null && permissions != null) {
             for (String permission : permissions) {
