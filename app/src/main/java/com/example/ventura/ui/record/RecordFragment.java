@@ -1,5 +1,6 @@
 package com.example.ventura.ui.record;
 
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.example.ventura.R;
 import com.example.ventura.StartSessionActivity;
+import com.example.ventura.ui.home.HomeFragment;
 
 public class RecordFragment extends Fragment {
 
@@ -27,6 +29,10 @@ public class RecordFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        FragmentTransaction fragmentTransaction = getActivity()
+                .getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, new HomeFragment());
+        fragmentTransaction.commit();
         return inflater.inflate(R.layout.record_fragment, container, false);
     }
 
