@@ -42,7 +42,8 @@ public class ActivitySessionDetails extends AppCompatActivity {
     private TextView textViewDuration;
     private TextView textViewElevation;
     private TextView textViewPace;
-
+    private Polyline polyline;
+    IMapController mapController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,8 @@ public class ActivitySessionDetails extends AppCompatActivity {
             @Override
             public void onSuccessResponse(Session session) {
                 setData(session);
-                drawPath(map, session.getLatitude(), session.getLongtitude());
+                drawPath(session.getLatitude(), session.getLongtitude());
+                Log.i("asd",session.getLatitude() + " " + session.getLongtitude());
             }
         });
     }
@@ -103,12 +105,13 @@ public class ActivitySessionDetails extends AppCompatActivity {
         //drawPath(map, session.getLatitude(), session.getLongtitude());
     }
 
-    public void drawPath(MapView map, ArrayList<Double> latitude, ArrayList<Double> longitude) {
-        Polyline polyline = new Polyline(map);
-        IMapController mapController = map.getController();
+    public void drawPath(ArrayList<Double> latitude, ArrayList<Double> longitude) {
+        polyline = new Polyline(map);
+        mapController = map.getController();
+        Log.i("asd",latitude.get(0) + " " + longitude.get(0));
         GeoPoint startPoint = new GeoPoint(latitude.get(0), longitude.get(0));
-        mapController.setCenter(startPoint);
         mapController.setZoom(16.0);
+        mapController.setCenter(startPoint);
         for (int i = 0; i < latitude.size(); i++) {
             GeoPoint geoPoint = new GeoPoint(latitude.get(i), longitude.get(i));
             polyline.addPoint(geoPoint);

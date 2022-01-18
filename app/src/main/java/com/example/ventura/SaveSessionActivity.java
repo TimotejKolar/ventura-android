@@ -2,6 +2,7 @@ package com.example.ventura;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,6 +36,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SaveSessionActivity extends AppCompatActivity {
@@ -44,9 +47,14 @@ public class SaveSessionActivity extends AppCompatActivity {
     private MyApplication app;
     private String sessionUUID;
     private Session session;
+
+    private TextView distance;
+    private TextView pace;
+    private TextView type;
     String[] types = new String[]{"Running", "Cycling", "Hiking", "Walking"};
 
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +77,13 @@ public class SaveSessionActivity extends AppCompatActivity {
                 break;
             }
         }
+        distance = (TextView)findViewById(R.id.textViewSaveDistance);
+        pace = (TextView)findViewById(R.id.textViewSavePace);
+        type = (TextView)findViewById(R.id.textViewSaveType);
+
+        distance.setText(session.getDistance() + "km");
+        pace.setText(session.getPace() + "m/km");
+        type.setText(session.getActivityType());
     }
 
 

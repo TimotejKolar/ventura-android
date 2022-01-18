@@ -148,6 +148,10 @@ public class Session {
         this.distance = distance;
         this.uuid = UUID.randomUUID().toString().replace("-","");
     }
+
+    public double getPace(){
+        return duration / 60 / (distance / 1000);
+    }
     public Session(){
         latitude = new ArrayList<Double>();
         longtitude = new ArrayList<Double>();

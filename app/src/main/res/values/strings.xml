@@ -36,7 +36,7 @@
     <string name="help_sessions">See all your workout sessions</string>
     <string name="help_record">Start recording a workout</string>
     <string name="help_profile">See and edit your profile</string>
-    <string name="help_settings">Configure your user settings</string>
+    <string name="help_signs">Take a photo of a traffic sign to be recognized</string>
     <string name="start_activity">Start activity</string>
     <string name="back">Back</string>
     <string name="uploadPicture">Upload a picture</string>
@@ -64,4 +64,6 @@
     <string name="monitorHearbeat">Monitor heartbeat</string>
     <string name="heartbeatwillappear">Your average heartbeat per minute will appear here</string>
     <string name="your_heartbeats">Your heartbeats</string>
+    <string name="activity_type">Activity type:</string>
+    <string name="pace_">Pace:</string>
 </resources>
