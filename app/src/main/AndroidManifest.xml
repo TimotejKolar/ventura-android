@@ -12,7 +12,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
     <application
@@ -24,7 +25,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ventura"
         android:usesCleartextTraffic="true">
-        <activity android:name=".YourHeartbeatsActivity"></activity>
+        <activity android:name=".ActivitySessions"></activity>
+        <activity android:name=".YourHeartbeatsActivity" />
         <activity android:name=".HeartbeatActivity" />
         <activity android:name=".ActivitySessionDetails" />
         <activity android:name=".SaveSessionActivity" />
@@ -44,10 +46,15 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
-            <meta-data android:name="unityplayer.UnityActivity" android:value="true" />
+
+            <meta-data
+                android:name="unityplayer.UnityActivity"
+                android:value="true" />
         </activity>
         <activity
             android:name=".MainActivity"

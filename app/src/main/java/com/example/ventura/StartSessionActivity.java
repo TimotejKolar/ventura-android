@@ -194,5 +194,6 @@ public class StartSessionActivity extends AppCompatActivity {
         Intent intent = new Intent(this, StopwatchActivity.class);
         intent.putExtra("activityType", dropdown.getSelectedItem().toString());
         startActivity(intent);
+        finish();
     }
 }

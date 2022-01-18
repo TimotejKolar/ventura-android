@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ventura.ui.sessions.SessionsFragment;
+import com.example.ventura.ui.sessions.SessionsViewModel;
+import com.example.ventura.ui.settings.SettingsFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -163,11 +168,9 @@ public class StopwatchActivity extends AppCompatActivity {
     }
 
     public void onClickStartUnity(View view) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(app.getApplicationContext());
-        String jwt = sp.getString("jwt", null);
-        Intent intent = getPackageManager().getLaunchIntentForPackage("com.DefaultCompany.RGA");
-        intent.putExtra("jwt", jwt);
-        startActivity(intent);
+        Intent i = new Intent(this, ActivitySessions.class);
+        startActivity(i);
+        finish();
     }
 
     public static boolean hasPermissions(Context context, String... permissions) {

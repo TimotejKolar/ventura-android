@@ -1,24 +1,17 @@
-package com.example.ventura.ui.sessions;
+package com.example.ventura;
 
-import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -27,14 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ventura.ActivitySessionDetails;
-import com.example.ventura.AdapterSession;
-import com.example.ventura.MyApplication;
-import com.example.ventura.R;
-import com.example.ventura.Session;
-import com.example.ventura.Sessions;
-import com.example.ventura.URLConstants;
-
+import com.example.ventura.ui.sessions.SessionsViewModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,37 +34,27 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class SessionsFragment extends Fragment {
-
+public class ActivitySessions extends AppCompatActivity {
     private SessionsViewModel mViewModel;
     private RecyclerView recyclerView;
     private AdapterSession adapter;
     private MyApplication app;
     private Sessions ss = new Sessions();
 
-    public static SessionsFragment newInstance() {
-        return new SessionsFragment();
-    }
-
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.sessions_fragment, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SessionsViewModel.class);
-        recyclerView = getView().findViewById(R.id.recyclerView);
-        app = (MyApplication) getActivity().getApplication();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sessions);
+        recyclerView = findViewById(R.id.recyclerViewSessions);
+        app = (MyApplication) getApplication();
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        Context ctx = getContext();
+        Context ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         getSessions();
         initAdapter();
     }
+
 
 
     private void initDialog() {}
@@ -88,9 +64,13 @@ public class SessionsFragment extends Fragment {
         adapter = new AdapterSession(app, new AdapterSession.OnItemClickListener() {
             @Override
             public void onItemClick(View itemView, int position) {
-                Intent i = new Intent(getActivity().getBaseContext(), ActivitySessionDetails.class);
-                i.putExtra("SessionUUID", app.getSessions().getSessionAtPos(position).getUuid());
-                startActivity(i);
+                SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(app.getApplicationContext());
+                String jwt = sp.getString("jwt", null);
+                Intent intent = getPackageManager().getLaunchIntentForPackage("com.DefaultCompany.RGA");
+                intent.putExtra("SessionUUID", app.getSessions().getSessionAtPos(position).getUuid());
+                intent.putExtra("jwt", jwt);
+                startActivity(intent);
+                finish();
             }
 
             @Override
@@ -101,7 +81,7 @@ public class SessionsFragment extends Fragment {
             }
         }, ss);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
     }
 
     public ArrayList<Double> stringToDoubleArray(String string) {
@@ -114,6 +94,13 @@ public class SessionsFragment extends Fragment {
         }
         return doubleArrayList;
     }
+
+    /*protected void onResume()
+    {
+        super.onResume();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }*/
 
     public void getSessions() {
         Sessions sessions = new Sessions();
