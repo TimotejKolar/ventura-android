@@ -54,7 +54,7 @@ public class SaveSessionActivity extends AppCompatActivity {
     String[] types = new String[]{"Running", "Cycling", "Hiking", "Walking"};
 
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,9 +80,15 @@ public class SaveSessionActivity extends AppCompatActivity {
         distance = (TextView)findViewById(R.id.textViewSaveDistance);
         pace = (TextView)findViewById(R.id.textViewSavePace);
         type = (TextView)findViewById(R.id.textViewSaveType);
-
-        distance.setText(session.getDistance() + "km");
-        pace.setText(session.getPace() + "m/km");
+        String distanceText = "";
+        if(session.getDistance() > 1000){
+            distanceText = String.format("%,.2f", session.getDistance() / 1000) + "km";
+        }
+        else {
+            distanceText = String.format("%,.2f", session.getDistance()) + "m";
+        }
+        distance.setText(distanceText);
+        pace.setText(session.getPace() + "min/km");
         type.setText(session.getActivityType());
     }
 
