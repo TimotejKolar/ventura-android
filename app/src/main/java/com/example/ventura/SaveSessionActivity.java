@@ -1,5 +1,7 @@
 package com.example.ventura;
 
+import static com.example.ventura.ActivitySessionDetails.round;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -81,14 +83,23 @@ public class SaveSessionActivity extends AppCompatActivity {
         pace = (TextView)findViewById(R.id.textViewSavePace);
         type = (TextView)findViewById(R.id.textViewSaveType);
         String distanceText = "";
+        double distanceValue = 0;
         if(session.getDistance() > 1000){
-            distanceText = String.format("%,.2f", session.getDistance() / 1000) + "km";
+            distanceValue = session.getDistance() / 1000;
+            distanceValue = round(distanceValue, 2);
+            distanceText = distanceValue + "km";
         }
         else {
-            distanceText = String.format("%,.2f", session.getDistance()) + "m";
+            distanceValue = session.getDistance();
+            distanceValue = round(distanceValue, 2);
+
+            distanceText = distanceValue + "m";
         }
         distance.setText(distanceText);
-        pace.setText(session.getPace() + "min/km");
+        double paceValue = (session.getDuration() / 60f) / (session.getDistance() / 1000);
+        paceValue = round(paceValue, 2);
+        Log.i("asd","duration" + session.getDuration() + " distance:" + session.getDistance());
+        pace.setText(paceValue + "min/km");
         type.setText(session.getActivityType());
     }
 

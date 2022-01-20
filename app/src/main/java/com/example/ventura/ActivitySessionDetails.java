@@ -107,6 +107,7 @@ public class ActivitySessionDetails extends AppCompatActivity {
 
     public void drawPath(ArrayList<Double> latitude, ArrayList<Double> longitude) {
         polyline = new Polyline(map);
+        polyline.setColor(getResources().getColor(R.color.light_red));
         mapController = map.getController();
         Log.i("asd",latitude.get(0) + " " + longitude.get(0));
         GeoPoint startPoint = new GeoPoint(latitude.get(0), longitude.get(0));

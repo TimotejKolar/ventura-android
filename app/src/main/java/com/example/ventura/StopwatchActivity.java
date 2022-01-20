@@ -108,8 +108,10 @@ public class StopwatchActivity extends AppCompatActivity {
         map.setTileSource(TileSourceFactory.MAPNIK);
         map.setMultiTouchControls(true);
         polyline = new Polyline();
+        polyline.setColor(getResources().getColor(R.color.light_red));
         pathPoints = new ArrayList<GeoPoint>();
         map.getOverlays().add(polyline);
+
 
         dist = (TextView)findViewById(R.id.textViewDistance);
         CompassOverlay compassOverlay = new CompassOverlay(this,map);

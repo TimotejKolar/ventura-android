@@ -1,5 +1,7 @@
 package com.example.ventura;
 
+import static android.app.PendingIntent.getActivity;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -23,13 +25,15 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
     private MyApplication app;
     private OnItemClickListener listener;
     private Sessions sessions;
+    private Context context;
     public AdapterSession(){
         sessions = new Sessions();
     }
-    public AdapterSession(MyApplication app, OnItemClickListener listener, Sessions sessions) {
+    public AdapterSession(MyApplication app, OnItemClickListener listener, Sessions sessions, Context context) {
         this.app = app;
         this.listener = listener;
         this.sessions = app.getSessions();
+        this.context = context;
     }
 
     @NonNull
@@ -73,6 +77,7 @@ public class AdapterSession extends RecyclerView.Adapter<AdapterSession.ViewHold
 
     public void drawPath(MapView map, ArrayList<Double> latitude, ArrayList<Double> longitude) {
         Polyline polyline = new Polyline(map);
+        polyline.setColor(context.getResources().getColor(R.color.light_red));
         IMapController mapController = map.getController();
         GeoPoint startPoint = new GeoPoint(latitude.get(0), longitude.get(0));
         mapController.setCenter(startPoint);

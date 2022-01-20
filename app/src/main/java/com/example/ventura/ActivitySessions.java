@@ -79,7 +79,7 @@ public class ActivitySessions extends AppCompatActivity {
                 app.saveData();
                 adapter.notifyDataSetChanged();*/
             }
-        }, ss);
+        }, ss,app.getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getApplicationContext()));
     }

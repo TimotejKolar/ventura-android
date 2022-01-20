@@ -99,7 +99,7 @@ public class SessionsFragment extends Fragment {
                 app.saveData();
                 adapter.notifyDataSetChanged();*/
             }
-        }, ss);
+        }, ss,app.getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
