@@ -99,9 +99,9 @@ public class ActivitySessionDetails extends AppCompatActivity {
         }
         textViewElevation.setText(Integer.toString(elevationGain) + " m");
 
-        double pace = (session.getDuration() / 60) / (session.getDistance() / 1000);
+        double pace = (session.getDuration() / 60f) / (session.getDistance() / 1000);
         pace = round(pace, 2);
-        textViewPace.setText(Double.toString(pace) + " min/km");
+        textViewPace.setText(pace + " min/km");
         //drawPath(map, session.getLatitude(), session.getLongtitude());
     }
 
